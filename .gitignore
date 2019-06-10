@@ -1,0 +1,4 @@
+storage/*
+.idea/*
+.vscode/*
+*.sqlite3

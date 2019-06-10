@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./storage/data/postgres:/var/lib/postgresql/data
+  web:
+    container_name: webserver
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    ports:
+      - "9000:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=shakyapranin@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=root
